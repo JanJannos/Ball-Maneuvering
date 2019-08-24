@@ -1,4 +1,5 @@
-var tempDesc = "";
+var testColor = "";
+
 // piece object
 const piece = (function() {
   let el = null;
@@ -75,12 +76,13 @@ getTemperature = () => {
         }
       }
     })
-    .then(function(color) {
-      // const pieceId = document.getElementById("piece");
-      // piece.init(pieceId);
-      // pieceId.style.backgroundColor = color;
-      // // setNewColorRule(color);
-      // init();
+    .then(colorPicked => {
+      
+      const pieceId = document.getElementById("piece");
+      piece.init(pieceId);
+      pieceId.style.backgroundColor = colorPicked;
+      setNewColorRule(colorPicked);
+      init();
     });
 };
 
@@ -90,11 +92,8 @@ setCoordinates = (element, dx, dy) => {
   element.addEventListener("click", handleClick);
 };
 
-//get user data
-getTemperature();
-
 function init() {
-  getTemperature();
+  // getTemperature();
   const btnUp = document.getElementById("btn-up");
   setCoordinates(btnUp, 0, -100);
 
@@ -121,13 +120,13 @@ setNewColorRule = pickedColor => {
   document.getElementsByTagName("head")[0].appendChild(style);
 };
 
+getTemperature();
 
 window.addEventListener("DOMContentLoaded", event => {
-  
-  var testColor = 'yellow';
-  const pieceId = document.getElementById("piece");
-  piece.init(pieceId);
-  pieceId.style.backgroundColor = testColor;
-  setNewColorRule(testColor);
-  init();
+  // var testColor = 'yellow';
+  // const pieceId = document.getElementById("piece");
+  // piece.init(pieceId);
+  // pieceId.style.backgroundColor = colorPicked;
+  // setNewColorRule(colorPicked);
+  // init();
 });
