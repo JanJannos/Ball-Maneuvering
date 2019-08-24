@@ -1,3 +1,4 @@
+var tempDesc = "";
 // piece object
 const piece = (function() {
   let el = null;
@@ -41,7 +42,44 @@ random = () => {
   thePiece.style.bottom = "0px";
 };
 
+getTemperature = () => {
+  fetch(
+    "http://api.apixu.com/v1/current.json?key=dda6e762ae4f41efb7e173552192204&q=tel%20aviv"
+  )
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(json) {
+      console.log("Temperature : " + json.current.temp_c);
+      const temp = json.current.temp_c;
+      var color = "";
+      switch (true) {
+        case temp <= 10: {
+          color = "blue";
+        }
+
+        case temp >= 10 && temp <= 20: {
+          color = "green";
+        }
+
+        case temp >= 21 && temp <= 30: {
+          color = "yellow";
+        }
+
+        case temp >= 21 && temp <= 30: {
+          color = "red";
+        }
+      }
+
+   
+    });
+};
+
+//get user data
+getTemperature();
+
 function init() {
+  getTemperature();
   const $btnUp = document.getElementById("btn-up");
   $btnUp.dataset.dx = 0;
   $btnUp.dataset.dy = -100;
@@ -61,6 +99,8 @@ function init() {
 }
 
 window.addEventListener("DOMContentLoaded", event => {
-  piece.init(document.getElementById("piece"));
+  const pieceId = document.getElementById("piece");
+  piece.init(pieceId);
+  pieceId.style.backgroundColor = 'red';
   init();
 });
