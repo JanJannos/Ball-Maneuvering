@@ -86,10 +86,16 @@ getTemperature = () => {
 changeBallLocation = (elementId, dx, dy) => {
   $("#" + elementId).click(function() {
     var width = $(window).width();
+    var height = $(window).height();
     var currPos = $("#piece").position().left;
-
+    var currPosY = $("#piece").position().top;
      // Right
-    if ((elementId === "btn-right") && (width - currPos <= 100)){    
+
+    var chosenXmovement = null;
+    var chosenYmovement = null;
+
+    if ((elementId === "btn-right") && (width - currPos <= 100)){
+      chosenXmovement = width;
       $("#" + elementId).click(function() {
         $("#piece").animate(
           {
@@ -102,7 +108,7 @@ changeBallLocation = (elementId, dx, dy) => {
 
     // Left
     else if ((elementId === "btn-left") && (currPos <= 50)){
-      
+      chosenXmovement = 0;
       $("#" + elementId).click(function() {
         $("#piece").animate(
           {
@@ -111,7 +117,31 @@ changeBallLocation = (elementId, dx, dy) => {
           "fast"
         );
       });
-    } 
+    }
+
+    // Up
+    else if ((elementId === "btn-up") && (currPosY <= 0)){
+      $("#" + elementId).click(function() {
+        $("#piece").animate(
+          {
+            top: "=" + height
+          },
+          "fast"
+        );
+      });
+    }
+
+    // Down
+    else if ((elementId === "btn-down") && (height - currPosY <= 100)){
+      $("#" + elementId).click(function() {
+        $("#piece").animate(
+          {
+            top: "=" + 0
+          },
+          "fast"
+        );
+      });
+    }
     
     // General case
     else {
