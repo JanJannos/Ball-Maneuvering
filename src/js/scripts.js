@@ -18,6 +18,10 @@ function handleClick(ev) {
   piece.moveDelta(parseInt(this.dataset.dx), parseInt(this.dataset.dy));
 }
 
+
+/**
+ * Reset the Piece's location
+ */
 resetBall = () => {
   const thePiece = document.getElementById("piece");
   thePiece.style.left = "50%";
@@ -26,6 +30,12 @@ resetBall = () => {
   thePiece.style.bottom = "0px";
 };
 
+
+
+/**
+ * Randomize a location
+ * 
+ */
 randomizeBallLocation = () => {
   const thePiece = document.getElementById("piece");
   var divsize = (Math.random() * 100 + 50).toFixed();
@@ -41,6 +51,11 @@ randomizeBallLocation = () => {
   // changeBallLocation2("btn-random", x, y);
 };
 
+
+
+/***
+ * Fetch the Temperature from the API
+ */
 getTemperature = () => {
   fetch(
     "http://api.apixu.com/v1/current.json?key=dda6e762ae4f41efb7e173552192204&q=tel%20aviv"
@@ -83,66 +98,54 @@ getTemperature = () => {
     });
 };
 
+
+
+/**
+ * Set Piece's next location 
+ */
 changeBallLocation = (elementId, dx, dy) => {
   $("#" + elementId).click(function() {
     var width = $(window).width();
     var height = $(window).height();
     var currPos = $("#piece").position().left;
     var currPosY = $("#piece").position().top;
-     // Right
+    // Right
 
     var chosenXmovement = null;
     var chosenYmovement = null;
 
-    if ((elementId === "btn-right") && (width - currPos <= 100)){
+    if (elementId === "btn-right" && width - currPos <= 100) {
       chosenXmovement = width;
-      $("#" + elementId).click(function() {
-        $("#piece").animate(
-          {
-            left: "=" + width
-          },
-          "fast"
-        );
-      });
-    } 
+    }
 
     // Left
-    else if ((elementId === "btn-left") && (currPos <= 50)){
+    else if (elementId === "btn-left" && currPos <= 50) {
       chosenXmovement = 0;
-      $("#" + elementId).click(function() {
-        $("#piece").animate(
-          {
-            left: "=" + 0
-          },
-          "fast"
-        );
-      });
     }
 
     // Up
-    else if ((elementId === "btn-up") && (currPosY <= 0)){
+    else if (elementId === "btn-up" && currPosY <= 0) {
+      chosenYmovement = height;
+    }
+
+    // Down
+    else if (elementId === "btn-down" && height - currPosY <= 100) {
+      chosenYmovement = 0;
+    }
+
+
+    if (chosenYmovement !== null || chosenXmovement !== null){
       $("#" + elementId).click(function() {
         $("#piece").animate(
           {
-            top: "=" + height
+            top: "=" + chosenYmovement , 
+            left: "=" + chosenXmovement
           },
           "fast"
         );
       });
     }
 
-    // Down
-    else if ((elementId === "btn-down") && (height - currPosY <= 100)){
-      $("#" + elementId).click(function() {
-        $("#piece").animate(
-          {
-            top: "=" + 0
-          },
-          "fast"
-        );
-      });
-    }
-    
     // General case
     else {
       $("#piece").animate(
@@ -156,18 +159,10 @@ changeBallLocation = (elementId, dx, dy) => {
   });
 };
 
-changeBallLocation2 = (elementId, dx, dy) => {
-  $("#" + elementId).click(function() {
-    $("#piece").animate(
-      {
-        top: dx,
-        left: dy
-      },
-      "slow"
-    );
-  });
-};
 
+/**
+ * Init function 
+ */
 function init() {
   changeBallLocation("btn-up", -100, 0);
   changeBallLocation("btn-right", 0, 100);
@@ -175,6 +170,11 @@ function init() {
   changeBallLocation("btn-left", 0, -100);
 }
 
+
+
+/**
+ * Pick a color and set it as the Piece's chosen color
+ */
 setNewColorRule = pickedColor => {
   var css = `.circle:hover{ background-color: #ffffff !important; border: 1px solid ${pickedColor}; }`;
   var style = document.createElement("style");
