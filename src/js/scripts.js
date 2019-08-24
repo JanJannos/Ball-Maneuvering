@@ -42,8 +42,6 @@ random = () => {
   thePiece.style.bottom = "0px";
 };
 
-var theColor = "";
-
 getTemperature = () => {
   fetch(
     "http://api.apixu.com/v1/current.json?key=dda6e762ae4f41efb7e173552192204&q=tel%20aviv"
@@ -78,11 +76,11 @@ getTemperature = () => {
       }
     })
     .then(function(color) {
-      theColor = color;
-      const pieceId = document.getElementById("piece");
-      piece.init(pieceId);
-      pieceId.style.backgroundColor = theColor;
-      init();
+      // const pieceId = document.getElementById("piece");
+      // piece.init(pieceId);
+      // pieceId.style.backgroundColor = color;
+      // // setNewColorRule(color);
+      // init();
     });
 };
 
@@ -102,17 +100,34 @@ function init() {
 
   const btnRight = document.getElementById("btn-right");
   setCoordinates(btnRight, 100, 0);
-  
+
   const btnDown = document.getElementById("btn-down");
   setCoordinates(btnDown, 0, 100);
-  
+
   const btnLeft = document.getElementById("btn-left");
   setCoordinates(btnLeft, -100, 0);
 }
 
-// window.addEventListener("DOMContentLoaded", event => {
-//   const pieceId = document.getElementById("piece");
-//   piece.init(pieceId);
-//   pieceId.style.backgroundColor = theColor;
-//   init();
-// });
+setNewColorRule = pickedColor => {
+  var css = `.circle:hover{ background-color: #ffffff !important; border: 1px solid ${pickedColor}; }`;
+  var style = document.createElement("style");
+
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+
+  document.getElementsByTagName("head")[0].appendChild(style);
+};
+
+
+window.addEventListener("DOMContentLoaded", event => {
+  
+  var testColor = 'yellow';
+  const pieceId = document.getElementById("piece");
+  piece.init(pieceId);
+  pieceId.style.backgroundColor = testColor;
+  setNewColorRule(testColor);
+  init();
+});

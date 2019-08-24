@@ -73,7 +73,7 @@ body {
   left: 50%;
 }
 
-.circle:hover {
-  background: #ffffff;
-  border: 1px solid red;
-}
+/* .circle:hover {
+  background-color: #ffffff !important;
+  border: 1px solid yellow;
+} */
