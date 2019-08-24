@@ -1,6 +1,3 @@
-var testColor = "";
-
-// piece object
 const piece = (function() {
   let el = null;
   const init = function(el) {
@@ -77,7 +74,6 @@ getTemperature = () => {
       }
     })
     .then(colorPicked => {
-      
       const pieceId = document.getElementById("piece");
       piece.init(pieceId);
       pieceId.style.backgroundColor = colorPicked;
@@ -92,33 +88,85 @@ setCoordinates = (element, dx, dy) => {
   element.addEventListener("click", handleClick);
 };
 
+changeBallLocation = (elementId, dx, dy) => {
+  $("#" + elementId).click(function() {
+    $("#piece").animate(
+      {
+        top: "+=" + dx,
+        left: "+=" + dy
+      },
+      "slow"
+    );
+  });
+};
+
 function init() {
-  // getTemperature();
-  const btnUp = document.getElementById("btn-up");
-  setCoordinates(btnUp, 0, -100);
+  changeBallLocation("btn-up" , -100 , 0);
+  // const btnUp = document.getElementById("btn-up");
+  // $("#btn-up").click(function() {
+  //   $("#piece").animate(
+  //     {
+  //       top: "+=-100" , 
+  //       left: "+=0"
+  //     },
+  //     "slow"
+  //   );
+  // });
 
-  const btnRight = document.getElementById("btn-right");
-  setCoordinates(btnRight, 100, 0);
+  // 
+  // const btnRight = document.getElementById("btn-right");
+  changeBallLocation("btn-right" , 0 , 100);
+  // $("#btn-right").click(function() {
+  //   $("#piece").animate(
+  //     {
+  //       top: "+=0" ,
+  //       left: "+=100"
+  //     },
+  //     "slow"
+  //   );
+  // });
+ 
+  //
+ 
+  changeBallLocation("btn-down" , 100 , 0);
+ 
+  // const btnDown = document.getElementById("btn-down");
+  // $("#btn-down").click(function() {
+  //   $("#piece").animate(
+  //     {
+  //       top: "+=100" ,
+  //       left: "+=0"
+  //     },
+  //     "slow"
+  //   );
+  // });
+  
+  //
 
-  const btnDown = document.getElementById("btn-down");
-  setCoordinates(btnDown, 0, 100);
+  changeBallLocation("btn-left" , 0 , -100);
 
-  const btnLeft = document.getElementById("btn-left");
-  setCoordinates(btnLeft, -100, 0);
+  // const btnLeft = document.getElementById("btn-left");
+  // $("#btn-left").click(function() {
+  //   $("#piece").animate(
+  //     {
+  //       top: "+=0" ,
+  //       left: "+=-100"
+  //     },
+  //     "slow"
+  //   );
+  // });
+  // setCoordinates(btnLeft, -100, 0);
 }
 
 setNewColorRule = pickedColor => {
   var css = `.circle:hover{ background-color: #ffffff !important; border: 1px solid ${pickedColor}; }`;
   var style = document.createElement("style");
-
   if (style.styleSheet) {
     style.styleSheet.cssText = css;
   } else {
     style.appendChild(document.createTextNode(css));
   }
-
   document.getElementsByTagName("head")[0].appendChild(style);
 };
 
 getTemperature();
-
