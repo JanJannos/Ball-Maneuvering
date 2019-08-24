@@ -23,18 +23,7 @@ resetBall = () => {
   thePiece.style.left = "50%";
   thePiece.style.top = "100px";
   thePiece.style.right = "0px";
-  thePiece.style.bottom = "0px";  
-  
-  // $("#" + "btn-reset").click(function() {
-  //   $("#piece").animate(
-  //     {
-  //       top: "100px" ,
-  //       left: "50%"
-  //     },
-  //     "slow"
-  //   );
-  // });
-
+  thePiece.style.bottom = "0px";
 };
 
 randomizeBallLocation = () => {
@@ -96,13 +85,44 @@ getTemperature = () => {
 
 changeBallLocation = (elementId, dx, dy) => {
   $("#" + elementId).click(function() {
-    $("#piece").animate(
-      {
-        top: "+=" + dx,
-        left: "+=" + dy
-      },
-      "slow"
-    );
+    var width = $(window).width();
+    var currPos = $("#piece").position().left;
+
+     // Right
+    if ((elementId === "btn-right") && (width - currPos <= 100)){    
+      $("#" + elementId).click(function() {
+        $("#piece").animate(
+          {
+            left: "=" + width
+          },
+          "fast"
+        );
+      });
+    } 
+
+    // Left
+    else if ((elementId === "btn-left") && (currPos <= 50)){
+      
+      $("#" + elementId).click(function() {
+        $("#piece").animate(
+          {
+            left: "=" + 0
+          },
+          "fast"
+        );
+      });
+    } 
+    
+    // General case
+    else {
+      $("#piece").animate(
+        {
+          top: "+=" + dx,
+          left: "+=" + dy
+        },
+        "fast"
+      );
+    }
   });
 };
 
