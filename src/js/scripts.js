@@ -122,11 +122,3 @@ setNewColorRule = pickedColor => {
 
 getTemperature();
 
-window.addEventListener("DOMContentLoaded", event => {
-  // var testColor = 'yellow';
-  // const pieceId = document.getElementById("piece");
-  // piece.init(pieceId);
-  // pieceId.style.backgroundColor = colorPicked;
-  // setNewColorRule(colorPicked);
-  // init();
-});
