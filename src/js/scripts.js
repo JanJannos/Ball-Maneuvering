@@ -42,6 +42,8 @@ random = () => {
   thePiece.style.bottom = "0px";
 };
 
+var theColor = "";
+
 getTemperature = () => {
   fetch(
     "http://api.apixu.com/v1/current.json?key=dda6e762ae4f41efb7e173552192204&q=tel%20aviv"
@@ -56,23 +58,38 @@ getTemperature = () => {
       switch (true) {
         case temp <= 10: {
           color = "blue";
+          return color;
         }
 
-        case temp >= 10 && temp <= 20: {
+        case temp >= 11 && temp <= 20: {
           color = "green";
+          return color;
         }
 
         case temp >= 21 && temp <= 30: {
           color = "yellow";
+          return color;
         }
 
-        case temp >= 21 && temp <= 30: {
+        case temp > 30: {
           color = "red";
+          return color;
         }
       }
-
-   
+    })
+    .then(function(color) {
+      theColor = color;
+      const pieceId = document.getElementById("piece");
+      piece.init(pieceId);
+      pieceId.style.backgroundColor = theColor;
+      init();
     });
+};
+
+setCoordinates = (element, dx, dy) => {
+  element.dataset.dx = dx;
+  element.dataset.dy = dy;
+  element.addEventListener("click", handleClick);
 };
 
 //get user data
@@ -80,27 +97,22 @@ getTemperature();
 
 function init() {
   getTemperature();
-  const $btnUp = document.getElementById("btn-up");
-  $btnUp.dataset.dx = 0;
-  $btnUp.dataset.dy = -100;
-  $btnUp.addEventListener("click", handleClick);
-  const $btnRight = document.getElementById("btn-right");
-  $btnRight.dataset.dx = 100;
-  $btnRight.dataset.dy = 0;
-  $btnRight.addEventListener("click", handleClick);
-  const $btnDown = document.getElementById("btn-down");
-  $btnDown.dataset.dx = 0;
-  $btnDown.dataset.dy = 100;
-  $btnDown.addEventListener("click", handleClick);
-  const $btnLeft = document.getElementById("btn-left");
-  $btnLeft.dataset.dx = -100;
-  $btnLeft.dataset.dy = 0;
-  $btnLeft.addEventListener("click", handleClick);
+  const btnUp = document.getElementById("btn-up");
+  setCoordinates(btnUp, 0, -100);
+
+  const btnRight = document.getElementById("btn-right");
+  setCoordinates(btnRight, 100, 0);
+  
+  const btnDown = document.getElementById("btn-down");
+  setCoordinates(btnDown, 0, 100);
+  
+  const btnLeft = document.getElementById("btn-left");
+  setCoordinates(btnLeft, -100, 0);
 }
 
-window.addEventListener("DOMContentLoaded", event => {
-  const pieceId = document.getElementById("piece");
-  piece.init(pieceId);
-  pieceId.style.backgroundColor = 'red';
-  init();
-});
+// window.addEventListener("DOMContentLoaded", event => {
+//   const pieceId = document.getElementById("piece");
+//   piece.init(pieceId);
+//   pieceId.style.backgroundColor = theColor;
+//   init();
+// });
