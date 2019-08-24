@@ -18,15 +18,26 @@ function handleClick(ev) {
   piece.moveDelta(parseInt(this.dataset.dx), parseInt(this.dataset.dy));
 }
 
-reset = () => {
+resetBall = () => {
   const thePiece = document.getElementById("piece");
   thePiece.style.left = "50%";
   thePiece.style.top = "100px";
   thePiece.style.right = "0px";
-  thePiece.style.bottom = "0px";
+  thePiece.style.bottom = "0px";  
+  
+  // $("#" + "btn-reset").click(function() {
+  //   $("#piece").animate(
+  //     {
+  //       top: "100px" ,
+  //       left: "50%"
+  //     },
+  //     "slow"
+  //   );
+  // });
+
 };
 
-random = () => {
+randomizeBallLocation = () => {
   const thePiece = document.getElementById("piece");
   var divsize = (Math.random() * 100 + 50).toFixed();
 
@@ -38,6 +49,7 @@ random = () => {
   thePiece.style.top = y + "px";
   thePiece.style.right = "0px";
   thePiece.style.bottom = "0px";
+  // changeBallLocation2("btn-random", x, y);
 };
 
 getTemperature = () => {
@@ -82,12 +94,6 @@ getTemperature = () => {
     });
 };
 
-setCoordinates = (element, dx, dy) => {
-  element.dataset.dx = dx;
-  element.dataset.dy = dy;
-  element.addEventListener("click", handleClick);
-};
-
 changeBallLocation = (elementId, dx, dy) => {
   $("#" + elementId).click(function() {
     $("#piece").animate(
@@ -100,62 +106,23 @@ changeBallLocation = (elementId, dx, dy) => {
   });
 };
 
+changeBallLocation2 = (elementId, dx, dy) => {
+  $("#" + elementId).click(function() {
+    $("#piece").animate(
+      {
+        top: dx,
+        left: dy
+      },
+      "slow"
+    );
+  });
+};
+
 function init() {
-  changeBallLocation("btn-up" , -100 , 0);
-  // const btnUp = document.getElementById("btn-up");
-  // $("#btn-up").click(function() {
-  //   $("#piece").animate(
-  //     {
-  //       top: "+=-100" , 
-  //       left: "+=0"
-  //     },
-  //     "slow"
-  //   );
-  // });
-
-  // 
-  // const btnRight = document.getElementById("btn-right");
-  changeBallLocation("btn-right" , 0 , 100);
-  // $("#btn-right").click(function() {
-  //   $("#piece").animate(
-  //     {
-  //       top: "+=0" ,
-  //       left: "+=100"
-  //     },
-  //     "slow"
-  //   );
-  // });
- 
-  //
- 
-  changeBallLocation("btn-down" , 100 , 0);
- 
-  // const btnDown = document.getElementById("btn-down");
-  // $("#btn-down").click(function() {
-  //   $("#piece").animate(
-  //     {
-  //       top: "+=100" ,
-  //       left: "+=0"
-  //     },
-  //     "slow"
-  //   );
-  // });
-  
-  //
-
-  changeBallLocation("btn-left" , 0 , -100);
-
-  // const btnLeft = document.getElementById("btn-left");
-  // $("#btn-left").click(function() {
-  //   $("#piece").animate(
-  //     {
-  //       top: "+=0" ,
-  //       left: "+=-100"
-  //     },
-  //     "slow"
-  //   );
-  // });
-  // setCoordinates(btnLeft, -100, 0);
+  changeBallLocation("btn-up", -100, 0);
+  changeBallLocation("btn-right", 0, 100);
+  changeBallLocation("btn-down", 100, 0);
+  changeBallLocation("btn-left", 0, -100);
 }
 
 setNewColorRule = pickedColor => {
